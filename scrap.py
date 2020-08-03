@@ -4,6 +4,7 @@ from urllib.parse import urlencode
 import webbrowser
 import sqlite3
 import json
+import os
 
 options = webdriver.ChromeOptions()
 options.add_argument('headless')
@@ -13,17 +14,30 @@ pincode_file = open('IN.csv','r')
 l = pincode_file.read().split('\n')
 l.pop(0)
 l.pop()
-q = input("These catogories are can be scraped,choose any option to continue\n 1)Groceries Shop\n 2)Xerox shop \n 3)Clinic \n 4)Medicine shop \n 5)Super market \n 6)Electronic shop\n")
-dic={"1":"Groceries Shop","2":"Xerox shop","3":"Clinic","4":"Medicine shop","5":"Super market","6":"Electronic shop"}
+q = input("Different varieties of stores can be scraped,Enter the type of the store you want to scrape : ")
+
+#q = input("These catogories are can be scraped,choose any option to continue\n 1)Groceries Shop\n 2)Xerox shop \n 3)Clinic \n 4)Medicine shop \n 5)Super market \n 6)Electronic shop\n")
+#dic={"1":"Groceries Shop","2":"Xerox shop","3":"Clinic","4":"Medicine shop","5":"Super market","6":"Electronic shop"}
+
 for i,line in enumerate(l):
 	pincode = line[line.find('/')+1:line.find(',')]
 	print(i,pincode)
 	print("running.....")
 
+
+	_dir = "."       
+
+
+	_dir = os.path.join(_dir,'%s' % q)
+
+	if not os.path.exists(_dir):
+		os.makedirs(_dir)
+
+
 	place = pincode
-	search = dic[q]
+	search = q
 	
-	f_path = f'{dic[q]}/{place}.json'
+	f_path = f'{q}/{place}.json'
 	file = open(f_path,'w')
 
 	#file.write('name,rating,detail,location,opening_time,phone\n')
