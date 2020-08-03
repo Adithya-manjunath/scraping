@@ -6,9 +6,7 @@ import sqlite3
 import json
 import os
 
-options = webdriver.ChromeOptions()
-options.add_argument('headless')
-browser = webdriver.Chrome(options=options)
+
 
 pincode_file = open('IN.csv','r')
 l = pincode_file.read().split('\n')
@@ -23,6 +21,9 @@ for i,line in enumerate(l):
 	pincode = line[line.find('/')+1:line.find(',')]
 	print(i,pincode)
 	print("running.....")
+	options = webdriver.ChromeOptions()
+	options.add_argument('headless')
+	browser = webdriver.Chrome(options=options)
 
 
 	_dir = "."       
@@ -148,7 +149,8 @@ for i,line in enumerate(l):
 	json.dump(last, file)
 	file.close()
 	print(f"file {place}.json successfully created")
-
+	browser.close()
+	
 
 
 print("program finished with downloading 5000 files")
